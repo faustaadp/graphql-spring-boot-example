@@ -2,21 +2,21 @@
 Aplikasi sederhana untuk memantau tugas kuliah. Setiap mata kuliah (matkul) memiliki tugas-tugas, setiap mahasiswa bisa subscribe dan unsubscribe suatu matkul. Dengan aplikasi ini, kita bisa melihat tugas-tugas mahasiswa dari matkul-matkul yang disubscribe.
 
 # Tugas
-##### Atribut:
+### Atribut:
 - kodeTugas [Kode dari tugas]
 - nama [Nama dari tugas]
 - matkul [Nama matkul dari tugas]
 - deadline [Deadline tugas dengan format "YYYY-MM-DD"]
 
 # Matkul
-##### Atribut:
+### Atribut:
 - kodeMatkul [Kode dari matkul]
 - nama [Nama dari matkul]
 - sks [Jumlah sks dari matkul]
 - tugas [Kumpulan tugas-tugas dari matkul]
 
 # Mahasiswa
-##### Atribut:
+### Atribut:
 - npm [Nomor Pokok Mahasiswa]
 - nama [Nama dari mahasiswa]
 - matkul [Kumpulan matkul-matkul yang disubscribe mahasiswa]
@@ -456,7 +456,7 @@ mutation{
 }
 ```
 
-#Melihat tugas-tugas Fausta
+### Melihat tugas-tugas Fausta
 ```
 {
   getTugasByNpm(npm:1906285560){
@@ -556,7 +556,7 @@ mutation{
 }
 ```
 
-# Mengubah deadline PR-1 Jarkom menjadi 2022-02-22
+### Mengubah deadline PR-1 Jarkom menjadi 2022-02-22
 ```
 mutation{
   updateTugas(kodeTugas:"Jarkom-1", deadline:"2022-02-22"){
