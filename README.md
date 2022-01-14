@@ -211,7 +211,7 @@ mutation{
     nama
     npm
     matkul{
-			sks
+      sks
       nama
     }
   }
@@ -241,7 +241,7 @@ mutation{
     nama
     npm
     matkul{
-			sks
+      sks
       nama
     }
   }
@@ -322,7 +322,7 @@ mutation{
     nama
     npm
     matkul{
-     	kodeMatkul
+      kodeMatkul
       nama
       sks
     }	
@@ -429,8 +429,8 @@ mutation{
     nama
     npm
     matkul{
-	    sks
-        nama
+      sks
+      nama
     }
   }
 }
@@ -505,7 +505,7 @@ mutation{
     nama
     npm
     matkul{
-			sks
+    	sks
       nama
     }
   }
