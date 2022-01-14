@@ -1,99 +1,43 @@
-# GraphQL example implemented with Spring Boot
+# Deskripsi
+Aplikasi sederhana untuk memantau tugas kuliah. Setiap mata kuliah (matkul) memiliki tugas-tugas, setiap mahasiswa bisa subscribe dan unsubscribe suatu matkul. Dengan aplikasi ini, kita bisa melihat tugas-tugas mahasiswa dari matkul-matkul yang disubscribe.
 
-This is simple example of GraphQL API implemented in Java with Spring Boot, and relaying on it's magic :)
+# Tugas
+##### Atribut:
+- kodeTugas [Kode dari tugas]
+- nama [Nama dari tugas]
+- matkul [Nama matkul dari tugas]
+- deadline [Deadline tugas dengan format "YYYY-MM-DD"]
 
-There is example of implementation of **Query** and **Subscription**.
+# Matkul
+##### Atribut:
+- kodeMatkul [Kode dari matkul]
+- nama [Nama dari matkul]
+- sks [Jumlah sks dari matkul]
+- tugas [Kumpulan tugas-tugas dari matkul]
 
-## Dependencies
+# Mahasiswa
+##### Atribut:
+- npm [Nomor Pokok Mahasiswa]
+- nama [Nama dari mahasiswa]
+- matkul [Kumpulan matkul-matkul yang disubscribe mahasiswa]
 
-### GraphQL
+# Mutation
+- `addTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas` Menambahkan tugas
+- `addMatkul(kodeMatkul: String, nama: String, sks: Int): Matkul` Menambahkan matkul
+- `addMahasiswa(npm: Int, nama: String): Mahasiswa` Menambahkan mahasiswa
+- `deleteTugas(kodeTugas: String) : Boolean` Menghapus tugas 
+- `deleteMatkul(kodeMatkul: String) : Boolean` Menghapus matkul 
+- `deleteMahasiswa(npm: Int) : Boolean` Menghapus Mahasiswa 
+- `updateTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas` Mengupdate tugas
+- `updateMatkul(kodeMatkul: String, nama: String, sks: Int): Matkul` Mengupdate matkul
+- `updateMahasiswa(npm: Int, nama: String): Mahasiswa` Mengupdate mahasiswa
+- `subscribe(npm: Int, kodeMatkul: String): Mahasiswa` Subscribe / Unsubscribe mahasiswa ke suatu matkul
 
-For GraphQL dependency added 
-
-```
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java</artifactId>
-            <version>8.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java-tools</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-```
-
-### GraphQL Spring Boot integration
-
-To connect GraphQL and Spring Boot added this dependency
-
-```
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-spring-boot-starter</artifactId>
-            <version>5.0.2</version>
-        </dependency>
-```
-
-### GraphiQL "out of the box"
-
-In order to get GraqhiQL, UI for testing local version of GraphQL API added this dependency
-
-```
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphiql-spring-boot-starter</artifactId>
-            <version>5.0.2</version>
-        </dependency>
-
-```
-
-For GraphiQL hit http://localhost:8080/graphiql, when you start application
-
-
-## Query implementation
-
-Query implementation is almost exactly the same like all other my examples of Query. Only difference is annotation **@Component** at top.
-For full code just open  [Query.java](https://github.com/vladimir-dejanovic/graphql-spring-boot-example/blob/master/src/main/java/xyz/itshark/play/graphqlspringboot/example/resolves/Query.java)
-
-Query example in GraphiQL 
-```
-query {
-  allData {
-    message
-  }
-}
-```
-
-## Mutation implementation
-
-Mutation implementation is almost exactly the same like all other my examples of Mutation. Only difference is annotation **@Component** at top.
-For full code just open  [Mutation.java](https://github.com/vladimir-dejanovic/graphql-spring-boot-example/blob/master/src/main/java/xyz/itshark/play/graphqlspringboot/example/resolves/Mutation.java)
-
-Mutation example in GraphiQL
-```
-mutation {
-  add(message:"Hello") {
-    message
-  }
-}
-```
-
-after mutation you can run query again and check if all worked as intended.
-
-## Subscription implementation
-
-Subscription implementation is done using RXJava and by implementing **GraphQLSubscriptionResolver**
-
-For full code example check  [Subscription.java](https://github.com/vladimir-dejanovic/graphql-spring-boot-example/blob/master/src/main/java/xyz/itshark/play/graphqlspringboot/example/resolves/Subscription.java)
- 
-Subscription **can be** tested from GraphiQL.
-
-Subscription example in GraphiQL
-```
-subscription {
-  data {
-    message
-  }
-}
-```
+# Query
+- `allDataMatkul: [Matkul]` Melihat seluruh matkul
+- `allDataTugas: [Tugas]` Melihat seluruh tugas
+- `allDataMahasiswa: [Mahasiswa]` Melihat seluruh mahasiswa
+- `getTugasByKodeTugas(kodeTugas: String): Tugas` Melihat tugas berdasarkan kodeTugas
+- `getMatkulByKodeMatkul(kodeMatkul: String) : Matkul` melihat matkul berdasar kodeMatkul
+- `getMahasiswaByNpm(npm: Int) : Mahasiswa` Melihat mahasiswa berdasar npm
+- `getTugasByNpm(npm: Int): [Tugas]` Melihat tugas tugas dari mahasiswa berdasarkan matkul-matkul yang sudah disubscribe
