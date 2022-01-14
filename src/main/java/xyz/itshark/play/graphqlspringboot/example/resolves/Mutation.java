@@ -36,7 +36,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Tugas addTugas(String kodeTugas, String nama, String kodeMatkul, String deadline) {
-        return tugasService.addTugas(kodeTugas, nama, matkulService.findByKodeMatkul(kodeMatkul), deadline);
+        return tugasService.addTugas(kodeTugas, nama, matkulService.getMatkulByKodeMatkul(kodeMatkul), deadline);
     }
 
     public Mahasiswa addMahasiswa(Long npm, String nama) {
@@ -56,7 +56,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Tugas updateTugas(String kodeTugas, String nama, String kodeMatkul, String deadline) {
-        return tugasService.updateTugas(kodeTugas, nama, matkulService.findByKodeMatkul(kodeMatkul), deadline);
+        return tugasService.updateTugas(kodeTugas, nama, matkulService.getMatkulByKodeMatkul(kodeMatkul), deadline);
     }
 
     public Matkul updateMatkul(String kodeMatkul, String nama, int sks){
@@ -68,6 +68,6 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Mahasiswa subscribe(Long npm, String kodeMatkul){
-        return mahasiswaService.subscribe(npm, matkulService.findByKodeMatkul(kodeMatkul));
+        return mahasiswaService.subscribe(npm, matkulService.getMatkulByKodeMatkul(kodeMatkul));
     }
 }

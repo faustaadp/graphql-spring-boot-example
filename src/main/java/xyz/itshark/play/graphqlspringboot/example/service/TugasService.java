@@ -17,7 +17,7 @@ public class TugasService {
         return list;
     }
 
-    public Tugas findByKodeTugas(String kodeTugas) {
+    public Tugas getTugasByKodeTugas(String kodeTugas){
         for(Tugas tugas : list)
         {
             if(tugas.getKodeTugas().equals(kodeTugas)) {
@@ -36,7 +36,7 @@ public class TugasService {
     }
 
     public boolean deleteTugas(String kodeTugas) {
-        Tugas tugas = findByKodeTugas(kodeTugas);
+        Tugas tugas = getTugasByKodeTugas(kodeTugas);
         if (tugas == null) {
             return false;
         }
@@ -47,7 +47,7 @@ public class TugasService {
 
 
     public Tugas updateTugas(String kodeTugas, String nama, Matkul matkul, String deadline) {
-        Tugas tugas = findByKodeTugas(kodeTugas);
+        Tugas tugas = getTugasByKodeTugas(kodeTugas);
         if(nama != null) {
             tugas.setNama(nama);
         }
@@ -59,11 +59,6 @@ public class TugasService {
         if(deadline != null) {
             tugas.setDeadline(deadline);
         }
-        return tugas;
-    }
-
-    public Tugas getTugasByKodeTugas(String kodeTugas){
-        Tugas tugas = findByKodeTugas(kodeTugas);
         return tugas;
     }
 }

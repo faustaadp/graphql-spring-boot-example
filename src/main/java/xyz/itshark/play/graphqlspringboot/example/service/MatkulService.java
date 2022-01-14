@@ -17,7 +17,7 @@ public class MatkulService {
         return list;
     }
 
-    public Matkul findByKodeMatkul(String kodeMatkul) {
+    public Matkul getMatkulByKodeMatkul(String kodeMatkul) {
         for(Matkul matkul : list)
         {
             if(matkul.getKodeMatkul().equals(kodeMatkul))
@@ -34,7 +34,7 @@ public class MatkulService {
     }
 
     public boolean deleteMatkul(String kodeMatkul) {
-        Matkul matkul = findByKodeMatkul(kodeMatkul);
+        Matkul matkul = getMatkulByKodeMatkul(kodeMatkul);
         if (matkul == null) {
             return false;
         }
@@ -43,18 +43,13 @@ public class MatkulService {
     }
 
     public Matkul updateMatkul(String kodeMatkul, String nama, int sks){
-        Matkul matkul = findByKodeMatkul(kodeMatkul);
+        Matkul matkul = getMatkulByKodeMatkul(kodeMatkul);
         if(nama != null) {
             matkul.setNama(nama);
         }
         if(sks != 0) {
             matkul.setSks(sks);
         }
-        return matkul;
-    }
-
-    public Matkul getMatkulByKodeMatkul(String kodeMatkul){
-        Matkul matkul = findByKodeMatkul(kodeMatkul);
         return matkul;
     }
 }

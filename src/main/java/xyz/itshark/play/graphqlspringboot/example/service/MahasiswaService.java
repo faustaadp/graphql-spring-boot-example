@@ -17,7 +17,7 @@ public class MahasiswaService {
         return list;
     }
 
-    public Mahasiswa findByNpm(Long npm) {
+    public Mahasiswa getMahasiswaByNpm(Long npm) {
         for(Mahasiswa mahasiswa : list)
         {
             if(mahasiswa.getNpm().equals(npm)) {
@@ -34,7 +34,7 @@ public class MahasiswaService {
     }
 
     public boolean deleteMahasiswa(Long npm) {
-        Mahasiswa mahasiswa = findByNpm(npm);
+        Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
         if (mahasiswa == null) {
             return false;
         }
@@ -43,7 +43,7 @@ public class MahasiswaService {
     }
 
     public List<Tugas> getTugasByNpm(Long npm){
-        Mahasiswa mahasiswa = findByNpm(npm);
+        Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
         List<Matkul> listMatkul = mahasiswa.getMatkul();
         List<Tugas> listTugas = new ArrayList<Tugas>();
         for(Matkul matkul : listMatkul)
@@ -54,7 +54,7 @@ public class MahasiswaService {
     }
 
     public Mahasiswa updateMahasiswa(Long npm, String nama) {
-        Mahasiswa mahasiswa = findByNpm(npm);
+        Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
         if(nama != null) {
             mahasiswa.setNama(nama);
         }
@@ -62,15 +62,10 @@ public class MahasiswaService {
     }
 
     public Mahasiswa subscribe(Long npm, Matkul matkul) {
-        Mahasiswa mahasiswa = findByNpm(npm);
+        Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
         if(matkul != null) {
             mahasiswa.subscribe(matkul);
         }
-        return mahasiswa;
-    }
-
-    public Mahasiswa getMahasiswaByNpm(Long npm) {
-        Mahasiswa mahasiswa = findByNpm(npm);
         return mahasiswa;
     }
 }
