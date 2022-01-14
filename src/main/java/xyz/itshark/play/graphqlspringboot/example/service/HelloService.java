@@ -11,15 +11,15 @@ public class HelloService {
 
     private List<Hello> list = new ArrayList();
 
-
-    public List<Hello> getAll() {
+    public List<Hello> getAllHello() {
         return list;
     }
 
-    public Hello add(String message) {
+    public Hello addHello(String message, int nomor) {
 
         Hello hello = new Hello();
         hello.setMessage(message);
+        hello.setNomor(nomor);
 
         list.add(hello);
 
