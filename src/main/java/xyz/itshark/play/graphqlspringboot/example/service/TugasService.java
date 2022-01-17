@@ -1,53 +1,43 @@
 package xyz.itshark.play.graphqlspringboot.example.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.itshark.play.graphqlspringboot.example.pojo.Hello;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
+import xyz.itshark.play.graphqlspringboot.example.repository.TugasRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TugasService {
-
-    private List<Tugas> list = new ArrayList();
+    @Autowired
+    private TugasRepository tugasRepository;
 
     public List<Tugas> getAllTugas() {
-        return list;
+        return tugasRepository.findAll();
     }
 
     public Tugas getTugasByKodeTugas(String kodeTugas){
-        for(Tugas tugas : list)
-        {
-            if(tugas.getKodeTugas().equals(kodeTugas)) {
-                return tugas;
-            }
-        }
-        return null;
+        return tugasRepository.findByKodeTugas(kodeTugas);
     }
 
     public Tugas addTugas(String kodeTugas, String nama, Matkul matkul, String deadline) {
         Tugas tugas = new Tugas(kodeTugas, nama, matkul, deadline);
-        list.add(tugas);
-        matkul.addTugas(tugas);
-
+        tugasRepository.save(tugas);
         return tugas;
     }
 
     public boolean deleteTugas(String kodeTugas) {
-        Tugas tugas = getTugasByKodeTugas(kodeTugas);
-        if (tugas == null) {
+        if (tugasRepository.findByKodeTugas(kodeTugas) == null) {
             return false;
         }
-        tugas.getMatkul().removeTugas(tugas);
-        list.remove(tugas);
+        tugasRepository.deleteById(kodeTugas);
         return true;
     }
 
 
     public Tugas updateTugas(String kodeTugas, String nama, Matkul matkul, String deadline) {
-        Tugas tugas = getTugasByKodeTugas(kodeTugas);
+        Tugas tugas = tugasRepository.findByKodeTugas(kodeTugas);
         if(nama != null) {
             tugas.setNama(nama);
         }
