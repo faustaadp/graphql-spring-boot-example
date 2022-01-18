@@ -1,15 +1,3 @@
-type Hello {
-    message: String
-    nomor: Int
-}
-
-type Tugas {
-    kodeTugas: String!
-    nama: String
-    matkul: Matkul
-    deadline: String
-}
-
 type Matkul {
     kodeMatkul: String!
     nama: String
@@ -17,44 +5,19 @@ type Matkul {
     tugas: [Tugas]
 }
 
-type Mahasiswa {
-    npm: Int!
-    nama: String
-    matkul: [Matkul]
-}
-
 type Query {
-    hello: Hello
-    allDataHello: [Hello]
     allDataMatkul: [Matkul]
-    allDataTugas: [Tugas]
-    allDataMahasiswa: [Mahasiswa]
-    getTugasByKodeTugas(kodeTugas: String): Tugas
     getMatkulByKodeMatkul(kodeMatkul: String) : Matkul
-    getMahasiswaByNpm(npm: Int) : Mahasiswa
-    getTugasByNpm(npm: Int): [Tugas]
 }
 
-type Subscription {
-    data: Hello
-}
 
 type Mutation {
-    addHello(message: String, nomor: Int): Hello
     addMatkul(kodeMatkul: String, nama: String, sks: Int): Matkul
-    addTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas
-    addMahasiswa(npm: Int, nama: String): Mahasiswa
-    deleteTugas(kodeTugas: String) : Boolean
     deleteMatkul(kodeMatkul: String) : Boolean
-    deleteMahasiswa(npm: Int) : Boolean
-    updateTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas
     updateMatkul(kodeMatkul: String, nama: String, sks: Int): Matkul
-    updateMahasiswa(npm: Int, nama: String): Mahasiswa
-    subscribe(npm: Int, kodeMatkul: String): Mahasiswa
 }
 
 schema {
     query: Query
     mutation: Mutation
-    subscription: Subscription
 }

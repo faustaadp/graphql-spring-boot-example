@@ -2,13 +2,11 @@ package xyz.itshark.play.graphqlspringboot.example.resolves;
 
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import xyz.itshark.play.graphqlspringboot.example.pojo.Hello;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Mahasiswa;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
-import xyz.itshark.play.graphqlspringboot.example.service.HelloService;
 import xyz.itshark.play.graphqlspringboot.example.service.MahasiswaService;
 import xyz.itshark.play.graphqlspringboot.example.service.MatkulService;
 import xyz.itshark.play.graphqlspringboot.example.service.TugasService;
@@ -16,32 +14,14 @@ import xyz.itshark.play.graphqlspringboot.example.service.TugasService;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class Query implements GraphQLQueryResolver {
+    private final MatkulService matkulService;
 
-    @Autowired
-    HelloService helloService;
+    private final TugasService tugasService;
 
-    @Autowired
-    MatkulService matkulService;
+    private final MahasiswaService mahasiswaService;
 
-    @Autowired
-    TugasService tugasService;
-
-    @Autowired
-    MahasiswaService mahasiswaService;
-
-    public Hello hello() {
-
-        Hello h = new Hello();
-        h.setMessage("hello");
-        h.setNomor(12);
-
-        return h;
-    }
-
-    public List<Hello> allDataHello() {
-        return helloService.getAllHello();
-    }
     public List<Matkul> allDataMatkul() {
         return matkulService.getAllMatkul();
     }

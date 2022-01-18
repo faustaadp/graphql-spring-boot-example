@@ -39,6 +39,18 @@ public class Matkul {
 
     }
 
+    public String getKodeMatkul() {
+        return this.kodeMatkul;
+    }
+
+    public String getNama() {
+        return this.nama;
+    }
+
+    public int sks() {
+        return this.sks;
+    }
+
     public List<Tugas> getTugas() {
         return this.tugas;
     }
@@ -51,6 +63,10 @@ public class Matkul {
         this.tugas.remove(tugas);
     }
 
+    public void setKodeMatkul(String kodeMatkul) {
+        this.kodeMatkul = kodeMatkul;
+    }
+
     public void setNama(String nama) {
         this.nama = nama;
     }
@@ -58,4 +74,10 @@ public class Matkul {
     public void setSks(int sks) {
         this.sks = sks;
     }
+
+    public void setTugas(List<Tugas> tugas) {
+        this.tugas = tugas;
+    }
+
+
 }
