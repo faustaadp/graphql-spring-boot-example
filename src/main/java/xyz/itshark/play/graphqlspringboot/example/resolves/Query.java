@@ -2,7 +2,7 @@ package xyz.itshark.play.graphqlspringboot.example.resolves;
 
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Mahasiswa;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
@@ -14,13 +14,15 @@ import xyz.itshark.play.graphqlspringboot.example.service.TugasService;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
 public class Query implements GraphQLQueryResolver {
-    private final MatkulService matkulService;
+    @Autowired
+    private MatkulService matkulService;
 
-    private final TugasService tugasService;
+    @Autowired
+    private TugasService tugasService;
 
-    private final MahasiswaService mahasiswaService;
+    @Autowired
+    private MahasiswaService mahasiswaService;
 
     public List<Matkul> allDataMatkul() {
         return matkulService.getAllMatkul();

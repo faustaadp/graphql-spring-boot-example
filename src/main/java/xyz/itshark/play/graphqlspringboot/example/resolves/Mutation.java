@@ -1,32 +1,25 @@
 package xyz.itshark.play.graphqlspringboot.example.resolves;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Mahasiswa;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
-import xyz.itshark.play.graphqlspringboot.example.repository.MahasiswaRepository;
-import xyz.itshark.play.graphqlspringboot.example.repository.MatkulRepository;
-import xyz.itshark.play.graphqlspringboot.example.repository.TugasRepository;
 import xyz.itshark.play.graphqlspringboot.example.service.MahasiswaService;
 import xyz.itshark.play.graphqlspringboot.example.service.MatkulService;
 import xyz.itshark.play.graphqlspringboot.example.service.TugasService;
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
+    @Autowired
     private MatkulService matkulService;
 
+    @Autowired
     private TugasService tugasService;
 
+    @Autowired
     private MahasiswaService mahasiswaService;
-
-//    public Mutation(MatkulService matkulService, TugasService tugasService, MahasiswaService mahasiswaService) {
-//        this.matkulService = matkulService;
-//        this.tugasService = tugasService;
-//        this.mahasiswaService = mahasiswaService;
-//    }
 
     public Matkul addMatkul(String kodeMatkul, String nama, int sks) {
         return matkulService.addMatkul(kodeMatkul, nama, sks);

@@ -1,0 +1,17 @@
+type Tugas {
+    kodeTugas: String!
+    nama: String
+    matkul: Matkul
+    deadline: String
+}
+
+extend type Query {
+    allDataTugas: [Tugas]
+    getTugasByKodeTugas(kodeTugas: String): Tugas
+}
+
+extend type Mutation {
+    addTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas
+    deleteTugas(kodeTugas: String) : Boolean
+    updateTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas
+}

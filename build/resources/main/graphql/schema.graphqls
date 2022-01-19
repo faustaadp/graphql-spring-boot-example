@@ -1,0 +1,23 @@
+type Matkul {
+    kodeMatkul: String!
+    nama: String
+    sks: Int
+    tugas: [Tugas]
+}
+
+type Query {
+    allDataMatkul: [Matkul]
+    getMatkulByKodeMatkul(kodeMatkul: String) : Matkul
+}
+
+
+type Mutation {
+    addMatkul(kodeMatkul: String, nama: String, sks: Int): Matkul
+    deleteMatkul(kodeMatkul: String) : Boolean
+    updateMatkul(kodeMatkul: String, nama: String, sks: Int): Matkul
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

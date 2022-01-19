@@ -49,4 +49,8 @@ public class Tugas {
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
+
+    public String getNama() {
+        return this.nama;
+    }
 }

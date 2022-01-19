@@ -1,25 +1,19 @@
 package xyz.itshark.play.graphqlspringboot.example.service;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
-import xyz.itshark.play.graphqlspringboot.example.repository.MatkulRepository;
 import xyz.itshark.play.graphqlspringboot.example.repository.TugasRepository;
 
 import java.util.List;
 
 @Service
 public class TugasService {
+    @Autowired
     private TugasRepository tugasRepository;
 
     public TugasService() {
-        System.out.println("Hei");
-    }
-
-    public TugasService(TugasRepository tugasRepository) {
-        this.tugasRepository = tugasRepository;
     }
 
     public List<Tugas> getAllTugas() {

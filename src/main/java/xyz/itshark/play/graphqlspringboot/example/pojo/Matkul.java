@@ -21,7 +21,7 @@ public class Matkul {
     @Column(name = "sks", updatable = true, nullable = true)
     private int sks;
 
-    @OneToMany(mappedBy = "matkul")
+    @OneToMany(mappedBy = "matkul", fetch = FetchType.EAGER)
     private List<Tugas> tugas;
 
     @JsonIgnore

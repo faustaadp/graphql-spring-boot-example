@@ -1,23 +1,18 @@
 package xyz.itshark.play.graphqlspringboot.example.service;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
-import xyz.itshark.play.graphqlspringboot.example.repository.MahasiswaRepository;
 import xyz.itshark.play.graphqlspringboot.example.repository.MatkulRepository;
 
 import java.util.List;
 
 @Service
 public class MatkulService {
+    @Autowired
     private MatkulRepository matkulRepository;
 
-    public MatkulService(){
-    }
-
-    public MatkulService(MatkulRepository matkulRepository){
-        this.matkulRepository = matkulRepository;
+    public MatkulService() {
     }
 
     public List<Matkul> getAllMatkul() {
@@ -29,7 +24,7 @@ public class MatkulService {
     }
 
     public Matkul addMatkul(String kodeMatkul, String nama, int sks) {
-        if(matkulRepository.findByKodeMatkul(kodeMatkul) != null) {
+        if (matkulRepository.findByKodeMatkul(kodeMatkul) != null) {
             return null;
         }
         Matkul matkul = new Matkul(kodeMatkul, nama, sks);

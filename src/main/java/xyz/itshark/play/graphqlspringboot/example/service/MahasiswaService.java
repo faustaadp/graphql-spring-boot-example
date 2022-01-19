@@ -1,6 +1,5 @@
 package xyz.itshark.play.graphqlspringboot.example.service;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Mahasiswa;
@@ -8,19 +7,15 @@ import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
 import xyz.itshark.play.graphqlspringboot.example.repository.MahasiswaRepository;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MahasiswaService {
+    @Autowired
     private MahasiswaRepository mahasiswaRepository;
 
-    public MahasiswaService(){
-    }
-
-    public MahasiswaService(MahasiswaRepository mahasiswaRepository){
-        this.mahasiswaRepository = mahasiswaRepository;
+    public MahasiswaService() {
     }
 
     public List<Mahasiswa> getAllMahasiswa() {
@@ -32,7 +27,7 @@ public class MahasiswaService {
     }
 
     public Mahasiswa addMahasiswa(Long npm, String nama) {
-        if(mahasiswaRepository.findByNpm(npm) != null){
+        if (mahasiswaRepository.findByNpm(npm) != null) {
             return null;
         }
         Mahasiswa mahasiswa = new Mahasiswa(npm, nama);
@@ -48,15 +43,14 @@ public class MahasiswaService {
         return true;
     }
 
-    public List<Tugas> getTugasByNpm(Long npm){
+    public List<Tugas> getTugasByNpm(Long npm) {
         Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
-        if(mahasiswa == null) {
+        if (mahasiswa == null) {
             return null;
         }
         List<Matkul> listMatkul = mahasiswa.getMatkul();
         List<Tugas> listTugas = new ArrayList<>();
-        for(Matkul matkul : listMatkul)
-        {
+        for (Matkul matkul : listMatkul) {
             listTugas.addAll(matkul.getTugas());
         }
         return listTugas;
@@ -64,18 +58,19 @@ public class MahasiswaService {
 
     public Mahasiswa updateMahasiswa(Long npm, String nama) {
         Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
-        if(mahasiswa == null) {
+        if (mahasiswa == null) {
             return null;
         }
-        if(nama != null) {
+        if (nama != null) {
             mahasiswa.setNama(nama);
         }
+        mahasiswaRepository.save(mahasiswa);
         return mahasiswa;
     }
 
     public Mahasiswa subscribe(Long npm, Matkul matkul) {
         Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
-        if(matkul != null) {
+        if (matkul != null) {
             mahasiswa.subscribe(matkul);
         }
         return mahasiswa;

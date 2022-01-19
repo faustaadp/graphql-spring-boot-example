@@ -1,0 +1,17 @@
+type Mahasiswa {
+    npm: Int!
+    nama: String
+    matkul: [Matkul]
+}
+extend type Query {
+    allDataMahasiswa: [Mahasiswa]
+    getMahasiswaByNpm(npm: Int) : Mahasiswa
+    getTugasByNpm(npm: Int): [Tugas]
+}
+
+extend type Mutation {
+    addMahasiswa(npm: Int, nama: String): Mahasiswa
+    deleteMahasiswa(npm: Int) : Boolean
+    updateMahasiswa(npm: Int, nama: String): Mahasiswa
+    subscribe(npm: Int, kodeMatkul: String): Mahasiswa
+}
