@@ -69,10 +69,11 @@ public class MahasiswaService {
     }
 
     public Mahasiswa subscribe(Long npm, Matkul matkul) {
-        Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
+        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
         if (matkul != null) {
             mahasiswa.subscribe(matkul);
         }
+        mahasiswaRepository.save(mahasiswa);
         return mahasiswa;
     }
 }

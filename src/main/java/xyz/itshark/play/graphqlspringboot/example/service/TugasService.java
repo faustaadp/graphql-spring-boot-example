@@ -58,6 +58,7 @@ public class TugasService {
         if (deadline != null) {
             tugas.setDeadline(deadline);
         }
+        tugasRepository.save(tugas);
         return tugas;
     }
 }

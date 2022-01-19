@@ -51,6 +51,7 @@ public class MatkulService {
         if (sks != 0) {
             matkul.setSks(sks);
         }
+        matkulRepository.save(matkul);
         return matkul;
     }
 }
