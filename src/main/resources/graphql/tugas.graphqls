@@ -1,7 +1,7 @@
 type Tugas {
     kodeTugas: String!
     nama: String
-    matkul: Matkul
+    matkul: Matkul!
     deadline: String
 }
 

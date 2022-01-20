@@ -13,7 +13,7 @@ public class Tugas {
     private String nama;
 
     @ManyToOne
-    @JoinColumn(name = "kodeMatkul")
+    @JoinColumn(name = "kodeMatkul", nullable = false)
     private Matkul matkul;
 
     @Column(name = "deadline", updatable = true, nullable = true)
