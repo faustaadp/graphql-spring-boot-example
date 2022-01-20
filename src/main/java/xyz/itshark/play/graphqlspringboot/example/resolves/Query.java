@@ -27,22 +27,28 @@ public class Query implements GraphQLQueryResolver {
     public List<Matkul> allDataMatkul() {
         return matkulService.getAllMatkul();
     }
+
     public List<Tugas> allDataTugas() {
         return tugasService.getAllTugas();
     }
+
     public List<Mahasiswa> allDataMahasiswa() {
         return mahasiswaService.getAllMahasiswa();
     }
-    public Matkul getMatkulByKodeMatkul(String kodeMatkul){
+
+    public Matkul getMatkulByKodeMatkul(String kodeMatkul) {
         return matkulService.getMatkulByKodeMatkul(kodeMatkul);
     }
-    public Tugas getTugasByKodeTugas(String kodeTugas){
+
+    public Tugas getTugasByKodeTugas(String kodeTugas) {
         return tugasService.getTugasByKodeTugas(kodeTugas);
     }
-    public Mahasiswa getMahasiswaByNpm(Long npm){
+
+    public Mahasiswa getMahasiswaByNpm(Long npm) {
         return mahasiswaService.getMahasiswaByNpm(npm);
     }
-    public List<Tugas> getTugasByNpm(Long npm){
+
+    public List<Tugas> getTugasByNpm(Long npm) {
         return mahasiswaService.getTugasByNpm(npm);
     }
 }

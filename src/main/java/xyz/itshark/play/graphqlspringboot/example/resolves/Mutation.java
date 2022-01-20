@@ -49,15 +49,15 @@ public class Mutation implements GraphQLMutationResolver {
         return tugasService.updateTugas(kodeTugas, nama, matkulService.getMatkulByKodeMatkul(kodeMatkul), deadline);
     }
 
-    public Matkul updateMatkul(String kodeMatkul, String nama, int sks){
+    public Matkul updateMatkul(String kodeMatkul, String nama, int sks) {
         return matkulService.updateMatkul(kodeMatkul, nama, sks);
     }
 
-    public Mahasiswa updateMahasiswa(Long npm, String nama){
+    public Mahasiswa updateMahasiswa(Long npm, String nama) {
         return mahasiswaService.updateMahasiswa(npm, nama);
     }
 
-    public Mahasiswa subscribe(Long npm, String kodeMatkul){
+    public Mahasiswa subscribe(Long npm, String kodeMatkul) {
         return mahasiswaService.subscribe(npm, matkulService.getMatkulByKodeMatkul(kodeMatkul));
     }
 }
