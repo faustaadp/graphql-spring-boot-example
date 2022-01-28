@@ -32,6 +32,8 @@ Aplikasi sederhana untuk memantau tugas kuliah. Setiap mata kuliah (matkul) memi
 - `updateMatkul(kodeMatkul: String, nama: String, sks: Int): Matkul` Mengupdate matkul
 - `updateMahasiswa(npm: Int, nama: String): Mahasiswa` Mengupdate mahasiswa
 - `subscribe(npm: Int, kodeMatkul: String): Mahasiswa` Subscribe / Unsubscribe mahasiswa ke suatu matkul
+- `deleteTugasByKodeMatkul(kodeMatkul: String): Int` Menghapus tugas berdasar kode matkul
+- `addTugasBulk(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String, jumlah: Int): Boolean` Menambahkan tugas sebanyak `jumlah` sekaligus
 
 # Query
 - `allDataMatkul: [Matkul]` Melihat seluruh matkul
