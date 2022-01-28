@@ -12,6 +12,8 @@ extend type Query {
 
 extend type Mutation {
     addTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas
-    deleteTugas(kodeTugas: String) : Boolean
+    addTugasBulk(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String, jumlah: Int): Boolean
+    deleteTugas(kodeTugas: String): Boolean
+    deleteTugasByKodeMatkul(kodeMatkul: String): Int
     updateTugas(kodeTugas: String, nama: String, kodeMatkul: String, deadline: String): Tugas
 }

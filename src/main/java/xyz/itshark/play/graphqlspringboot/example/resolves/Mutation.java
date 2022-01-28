@@ -33,6 +33,10 @@ public class Mutation implements GraphQLMutationResolver {
         return mahasiswaService.addMahasiswa(npm, nama);
     }
 
+    public boolean addTugasBulk(String kodeTugas, String nama, String kodeMatkul, String deadline, int jumlah) {
+        return tugasService.addTugasBulk(kodeTugas, nama, matkulService.getMatkulByKodeMatkul(kodeMatkul), deadline, jumlah);
+    }
+
     public boolean deleteTugas(String kodeTugas) {
         return tugasService.deleteTugas(kodeTugas);
     }
@@ -43,6 +47,10 @@ public class Mutation implements GraphQLMutationResolver {
 
     public boolean deleteMahasiswa(Long npm) {
         return mahasiswaService.deleteMahasiswa(npm);
+    }
+
+    public int deleteTugasByKodeMatkul(String kodeMatkul) {
+        return tugasService.deleteTugasByKodeMatkul(matkulService.getMatkulByKodeMatkul(kodeMatkul));
     }
 
     public Tugas updateTugas(String kodeTugas, String nama, String kodeMatkul, String deadline) {
