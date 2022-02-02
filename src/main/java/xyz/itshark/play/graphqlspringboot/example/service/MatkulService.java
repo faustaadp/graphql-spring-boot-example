@@ -2,6 +2,7 @@ package xyz.itshark.play.graphqlspringboot.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.itshark.play.graphqlspringboot.example.exception.GraphQLException;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.repository.MatkulRepository;
 
@@ -20,12 +21,16 @@ public class MatkulService {
     }
 
     public Matkul getMatkulByKodeMatkul(String kodeMatkul) {
-        return matkulRepository.findByKodeMatkul(kodeMatkul);
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
+        if (matkul == null) {
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
+        }
+        return matkul;
     }
 
     public Matkul addMatkul(String kodeMatkul, String nama, int sks) {
         if (matkulRepository.findByKodeMatkul(kodeMatkul) != null) {
-            return null;
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul sudah ada", "kodeMatkul", kodeMatkul);
         }
         Matkul matkul = new Matkul(kodeMatkul, nama, sks);
         matkulRepository.save(matkul);
@@ -34,7 +39,7 @@ public class MatkulService {
 
     public boolean deleteMatkul(String kodeMatkul) {
         if (matkulRepository.findByKodeMatkul(kodeMatkul) == null) {
-            return false;
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         matkulRepository.deleteById(kodeMatkul);
         return true;
@@ -43,7 +48,7 @@ public class MatkulService {
     public Matkul updateMatkul(String kodeMatkul, String nama, int sks) {
         Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
         if (matkul == null) {
-            return null;
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         if (nama != null) {
             matkul.setNama(nama);

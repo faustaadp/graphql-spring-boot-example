@@ -2,10 +2,12 @@ package xyz.itshark.play.graphqlspringboot.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.itshark.play.graphqlspringboot.example.exception.GraphQLException;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Mahasiswa;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
 import xyz.itshark.play.graphqlspringboot.example.repository.MahasiswaRepository;
+import xyz.itshark.play.graphqlspringboot.example.repository.MatkulRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,9 @@ public class MahasiswaService {
     @Autowired
     private MahasiswaRepository mahasiswaRepository;
 
+    @Autowired
+    private MatkulRepository matkulRepository;
+
     public MahasiswaService() {
     }
 
@@ -23,12 +28,16 @@ public class MahasiswaService {
     }
 
     public Mahasiswa getMahasiswaByNpm(Long npm) {
-        return mahasiswaRepository.findByNpm(npm);
+        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
+        if (mahasiswa == null) {
+            throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
+        }
+        return mahasiswa;
     }
 
     public Mahasiswa addMahasiswa(Long npm, String nama) {
         if (mahasiswaRepository.findByNpm(npm) != null) {
-            return null;
+            throw new GraphQLException("Mahasiswa dengan npm npm sudah ada", "npm", npm);
         }
         Mahasiswa mahasiswa = new Mahasiswa(npm, nama);
         mahasiswaRepository.save(mahasiswa);
@@ -46,7 +55,7 @@ public class MahasiswaService {
     public List<Tugas> getTugasByNpm(Long npm) {
         Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
         if (mahasiswa == null) {
-            return null;
+            throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
         List<Matkul> listMatkul = mahasiswa.getMatkul();
         List<Tugas> listTugas = new ArrayList<>();
@@ -57,9 +66,9 @@ public class MahasiswaService {
     }
 
     public Mahasiswa updateMahasiswa(Long npm, String nama) {
-        Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
+        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
         if (mahasiswa == null) {
-            return null;
+            throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
         if (nama != null) {
             mahasiswa.setNama(nama);
@@ -68,11 +77,16 @@ public class MahasiswaService {
         return mahasiswa;
     }
 
-    public Mahasiswa subscribe(Long npm, Matkul matkul) {
+    public Mahasiswa subscribe(Long npm, String kodeMatkul) {
         Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
-        if (matkul != null) {
-            mahasiswa.subscribe(matkul);
+        if (mahasiswa == null) {
+            throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
+        if (matkul == null) {
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
+        }
+        mahasiswa.subscribe(matkul);
         mahasiswaRepository.save(mahasiswa);
         return mahasiswa;
     }

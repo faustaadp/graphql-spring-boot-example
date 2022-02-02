@@ -2,12 +2,12 @@ package xyz.itshark.play.graphqlspringboot.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.itshark.play.graphqlspringboot.example.exception.GraphQLException;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
+import xyz.itshark.play.graphqlspringboot.example.repository.MatkulRepository;
 import xyz.itshark.play.graphqlspringboot.example.repository.TugasRepository;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,27 +16,31 @@ public class TugasService {
     @Autowired
     private TugasRepository tugasRepository;
 
+    @Autowired
+    private MatkulRepository matkulRepository;
+
     public TugasService() {
     }
 
     public List<Tugas> getAllTugas() {
-        Instant start = Instant.now();
-        try {
-            return tugasRepository.findAll();
-        } finally {
-            Instant end = Instant.now();
-            Duration timeElapsed = Duration.between(start, end);
-            System.out.println("Time taken: " + timeElapsed.toMillis() + " milliseconds");
-        }
+        return tugasRepository.findAll();
     }
 
     public Tugas getTugasByKodeTugas(String kodeTugas) {
-        return tugasRepository.findByKodeTugas(kodeTugas);
+        Tugas tugas = tugasRepository.findByKodeTugas(kodeTugas);
+        if (tugas == null) {
+            throw new GraphQLException("Tugas dengan kode tugas kodeTugas tidak ada", "kodeTugas", kodeTugas);
+        }
+        return tugas;
     }
 
-    public Tugas addTugas(String kodeTugas, String nama, Matkul matkul, String deadline) {
+    public Tugas addTugas(String kodeTugas, String nama, String kodeMatkul, String deadline) {
         if (tugasRepository.findByKodeTugas(kodeTugas) != null) {
-            return null;
+            throw new GraphQLException("Tugas dengan kode tugas kodeTugas sudah ada", "kodeTugas", kodeTugas);
+        }
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
+        if (matkul == null) {
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         Tugas tugas = new Tugas(kodeTugas, nama, matkul, deadline);
         tugasRepository.save(tugas);
@@ -45,15 +49,16 @@ public class TugasService {
 
     public boolean deleteTugas(String kodeTugas) {
         if (tugasRepository.findByKodeTugas(kodeTugas) == null) {
-            return false;
+            throw new GraphQLException("Tugas dengan kode tugas kodeTugas tidak ada", "kodeTugas", kodeTugas);
         }
         tugasRepository.deleteById(kodeTugas);
         return true;
     }
 
-    public int deleteTugasByKodeMatkul(Matkul matkul) {
+    public int deleteTugasByKodeMatkul(String kodeMatkul) {
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
         if (matkul == null) {
-            return 0;
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         Iterable<Tugas> listTugas = matkul.getTugas();
         int ret = matkul.getTugas().size();
@@ -62,10 +67,14 @@ public class TugasService {
     }
 
 
-    public Tugas updateTugas(String kodeTugas, String nama, Matkul matkul, String deadline) {
+    public Tugas updateTugas(String kodeTugas, String nama, String kodeMatkul, String deadline) {
         Tugas tugas = tugasRepository.findByKodeTugas(kodeTugas);
         if (tugas == null) {
-            return null;
+            throw new GraphQLException("Tugas dengan kode tugas kodeTugas tidak ada", "kodeTugas", kodeTugas);
+        }
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
+        if (matkul == null) {
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         if (nama != null) {
             tugas.setNama(nama);
@@ -80,9 +89,10 @@ public class TugasService {
         return tugas;
     }
 
-    public boolean addTugasBulk(String kodeTugas, String nama, Matkul matkul, String deadline, int jumlah) {
+    public boolean addTugasBulk(String kodeTugas, String nama, String kodeMatkul, String deadline, int jumlah) {
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
         if (matkul == null) {
-            return false;
+            throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         List<Tugas> listTugas = new ArrayList<Tugas>();
         for (int i = 1; i <= jumlah; i++) {

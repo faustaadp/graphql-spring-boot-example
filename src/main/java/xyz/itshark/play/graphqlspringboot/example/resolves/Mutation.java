@@ -26,7 +26,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Tugas addTugas(String kodeTugas, String nama, String kodeMatkul, String deadline) {
-        return tugasService.addTugas(kodeTugas, nama, matkulService.getMatkulByKodeMatkul(kodeMatkul), deadline);
+        return tugasService.addTugas(kodeTugas, nama, kodeMatkul, deadline);
     }
 
     public Mahasiswa addMahasiswa(Long npm, String nama) {
@@ -34,7 +34,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public boolean addTugasBulk(String kodeTugas, String nama, String kodeMatkul, String deadline, int jumlah) {
-        return tugasService.addTugasBulk(kodeTugas, nama, matkulService.getMatkulByKodeMatkul(kodeMatkul), deadline, jumlah);
+        return tugasService.addTugasBulk(kodeTugas, nama, kodeMatkul, deadline, jumlah);
     }
 
     public boolean deleteTugas(String kodeTugas) {
@@ -50,11 +50,11 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public int deleteTugasByKodeMatkul(String kodeMatkul) {
-        return tugasService.deleteTugasByKodeMatkul(matkulService.getMatkulByKodeMatkul(kodeMatkul));
+        return tugasService.deleteTugasByKodeMatkul(kodeMatkul);
     }
 
     public Tugas updateTugas(String kodeTugas, String nama, String kodeMatkul, String deadline) {
-        return tugasService.updateTugas(kodeTugas, nama, matkulService.getMatkulByKodeMatkul(kodeMatkul), deadline);
+        return tugasService.updateTugas(kodeTugas, nama, kodeMatkul, deadline);
     }
 
     public Matkul updateMatkul(String kodeMatkul, String nama, int sks) {
@@ -66,6 +66,6 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Mahasiswa subscribe(Long npm, String kodeMatkul) {
-        return mahasiswaService.subscribe(npm, matkulService.getMatkulByKodeMatkul(kodeMatkul));
+        return mahasiswaService.subscribe(npm, kodeMatkul);
     }
 }
