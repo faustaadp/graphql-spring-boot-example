@@ -21,15 +21,14 @@ public class MatkulService {
     }
 
     public Matkul getMatkulByKodeMatkul(String kodeMatkul) {
-        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
-        if (matkul == null) {
+        if (!matkulRepository.existsById(kodeMatkul)) {
             throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
-        return matkul;
+        return matkulRepository.findByKodeMatkul(kodeMatkul);
     }
 
     public Matkul addMatkul(String kodeMatkul, String nama, int sks) {
-        if (matkulRepository.findByKodeMatkul(kodeMatkul) != null) {
+        if (matkulRepository.existsById(kodeMatkul)) {
             throw new GraphQLException("Matkul dengan kode matkul kodeMatkul sudah ada", "kodeMatkul", kodeMatkul);
         }
         Matkul matkul = new Matkul(kodeMatkul, nama, sks);
@@ -38,7 +37,7 @@ public class MatkulService {
     }
 
     public boolean deleteMatkul(String kodeMatkul) {
-        if (matkulRepository.findByKodeMatkul(kodeMatkul) == null) {
+        if (!matkulRepository.existsById(kodeMatkul)) {
             throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         matkulRepository.deleteById(kodeMatkul);
@@ -46,10 +45,10 @@ public class MatkulService {
     }
 
     public Matkul updateMatkul(String kodeMatkul, String nama, int sks) {
-        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
-        if (matkul == null) {
+        if (!matkulRepository.existsById(kodeMatkul)) {
             throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
         if (nama != null) {
             matkul.setNama(nama);
         }

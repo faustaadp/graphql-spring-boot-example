@@ -28,15 +28,14 @@ public class MahasiswaService {
     }
 
     public Mahasiswa getMahasiswaByNpm(Long npm) {
-        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
-        if (mahasiswa == null) {
+        if (!mahasiswaRepository.existsById(npm)) {
             throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
-        return mahasiswa;
+        return mahasiswaRepository.findByNpm(npm);
     }
 
     public Mahasiswa addMahasiswa(Long npm, String nama) {
-        if (mahasiswaRepository.findByNpm(npm) != null) {
+        if (mahasiswaRepository.existsById(npm)) {
             throw new GraphQLException("Mahasiswa dengan npm npm sudah ada", "npm", npm);
         }
         Mahasiswa mahasiswa = new Mahasiswa(npm, nama);
@@ -45,18 +44,18 @@ public class MahasiswaService {
     }
 
     public boolean deleteMahasiswa(Long npm) {
-        if (getMahasiswaByNpm(npm) == null) {
-            return false;
+        if (!mahasiswaRepository.existsById(npm)) {
+            throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
         mahasiswaRepository.deleteById(npm);
         return true;
     }
 
     public List<Tugas> getTugasByNpm(Long npm) {
-        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
-        if (mahasiswa == null) {
+        if (!mahasiswaRepository.existsById(npm)) {
             throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
+        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
         List<Matkul> listMatkul = mahasiswa.getMatkul();
         List<Tugas> listTugas = new ArrayList<>();
         for (Matkul matkul : listMatkul) {
@@ -66,10 +65,10 @@ public class MahasiswaService {
     }
 
     public Mahasiswa updateMahasiswa(Long npm, String nama) {
-        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
-        if (mahasiswa == null) {
+        if (!mahasiswaRepository.existsById(npm)) {
             throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
+        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
         if (nama != null) {
             mahasiswa.setNama(nama);
         }
@@ -78,14 +77,14 @@ public class MahasiswaService {
     }
 
     public Mahasiswa subscribe(Long npm, String kodeMatkul) {
-        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
-        if (mahasiswa == null) {
+        if (!mahasiswaRepository.existsById(npm)) {
             throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
         }
-        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
-        if (matkul == null) {
+        if (!matkulRepository.existsById(kodeMatkul)) {
             throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
+        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
+        Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
         mahasiswa.subscribe(matkul);
         mahasiswaRepository.save(mahasiswa);
         return mahasiswa;
