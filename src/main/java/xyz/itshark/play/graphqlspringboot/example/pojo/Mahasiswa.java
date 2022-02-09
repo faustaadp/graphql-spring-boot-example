@@ -32,7 +32,6 @@ public class Mahasiswa {
     }
 
     public void subscribe(Matkul matkul) {
-        System.out.println(matkul);
         if (this.matkul.stream().filter(t -> t.getKodeMatkul().equals(matkul.getKodeMatkul())).count() > 0) {
             this.matkul.removeIf(t -> t.getKodeMatkul().equals(matkul.getKodeMatkul()));
         } else {

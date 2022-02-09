@@ -60,9 +60,9 @@ public class TugasService {
         }
         Matkul matkul = matkulRepository.findByKodeMatkul(kodeMatkul);
         Iterable<Tugas> listTugas = matkul.getTugas();
-        int ret = matkul.getTugas().size();
+        int size = matkul.getTugas().size();
         tugasRepository.deleteAll(listTugas);
-        return ret;
+        return size;
     }
 
 
@@ -70,7 +70,7 @@ public class TugasService {
         if (!tugasRepository.existsById(kodeTugas)) {
             throw new GraphQLException("Tugas dengan kode tugas kodeTugas tidak ada", "kodeTugas", kodeTugas);
         }
-        if (!matkulRepository.existsById(kodeMatkul)) {
+        if (!matkulRepository.existsById(kodeMatkul) && kodeMatkul != null) {
             throw new GraphQLException("Matkul dengan kode matkul kodeMatkul tidak ada", "kodeMatkul", kodeMatkul);
         }
         Tugas tugas = tugasRepository.findByKodeTugas(kodeTugas);
