@@ -3,8 +3,10 @@ package xyz.itshark.play.graphqlspringboot.example.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.itshark.play.graphqlspringboot.example.exception.GraphQLException;
+import xyz.itshark.play.graphqlspringboot.example.pojo.Mahasiswa;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Matkul;
 import xyz.itshark.play.graphqlspringboot.example.pojo.Tugas;
+import xyz.itshark.play.graphqlspringboot.example.repository.MahasiswaRepository;
 import xyz.itshark.play.graphqlspringboot.example.repository.MatkulRepository;
 import xyz.itshark.play.graphqlspringboot.example.repository.TugasRepository;
 
@@ -18,6 +20,9 @@ public class TugasService {
 
     @Autowired
     private MatkulRepository matkulRepository;
+
+    @Autowired
+    private MahasiswaRepository mahasiswaRepository;
 
     public TugasService() {
     }
@@ -100,5 +105,12 @@ public class TugasService {
         }
         tugasRepository.saveAll(listTugas);
         return true;
+    }
+
+    public List<Tugas> getTugasByNpmBatching(Long npm) {
+        if (!mahasiswaRepository.existsById(npm)) {
+            throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
+        }
+        return tugasRepository.findTugasByNpmBatching(npm);
     }
 }

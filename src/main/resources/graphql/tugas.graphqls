@@ -8,6 +8,7 @@ type Tugas {
 extend type Query {
     allDataTugas: [Tugas]
     getTugasByKodeTugas(kodeTugas: String): Tugas
+    getTugasByNpm(npm: Int): [Tugas]
 }
 
 extend type Mutation {

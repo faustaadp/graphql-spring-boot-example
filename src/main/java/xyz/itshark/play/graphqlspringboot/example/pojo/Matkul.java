@@ -2,6 +2,8 @@ package xyz.itshark.play.graphqlspringboot.example.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class Matkul {
     @Column(name = "sks", updatable = true, nullable = true)
     private int sks;
 
-    @OneToMany(mappedBy = "matkul", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "matkul", fetch = FetchType.LAZY)
     private List<Tugas> tugas;
 
     @JsonIgnore

@@ -51,19 +51,6 @@ public class MahasiswaService {
         return true;
     }
 
-    public List<Tugas> getTugasByNpm(Long npm) {
-        if (!mahasiswaRepository.existsById(npm)) {
-            throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);
-        }
-        Mahasiswa mahasiswa = mahasiswaRepository.findByNpm(npm);
-        List<Matkul> listMatkul = mahasiswa.getMatkul();
-        List<Tugas> listTugas = new ArrayList<>();
-        for (Matkul matkul : listMatkul) {
-            listTugas.addAll(matkul.getTugas());
-        }
-        return listTugas;
-    }
-
     public Mahasiswa updateMahasiswa(Long npm, String nama) {
         if (!mahasiswaRepository.existsById(npm)) {
             throw new GraphQLException("Mahasiswa dengan npm npm tidak ada", "npm", npm);

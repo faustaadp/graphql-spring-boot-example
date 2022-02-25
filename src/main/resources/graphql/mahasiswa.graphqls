@@ -6,7 +6,6 @@ type Mahasiswa {
 extend type Query {
     allDataMahasiswa: [Mahasiswa]
     getMahasiswaByNpm(npm: Int) : Mahasiswa
-    getTugasByNpm(npm: Int): [Tugas]
 }
 
 extend type Mutation {

@@ -49,6 +49,6 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public List<Tugas> getTugasByNpm(Long npm) {
-        return mahasiswaService.getTugasByNpm(npm);
+        return tugasService.getTugasByNpmBatching(npm);
     }
 }
